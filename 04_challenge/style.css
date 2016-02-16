@@ -1,0 +1,223 @@
+/**/
+/*Recreation of an animated gif*/
+/*The general shapes were obtained from: https://css-tricks.com/examples/ShapesOfCSS/ */
+/*They were modified to match the dimensions of the actual gif "sprites" */
+/**/
+
+* {
+  border-style: border-box;
+}
+
+/**/
+/*Styling the canvas*/
+/**/
+.canvas {
+  width: 590px;
+  height: 965px;
+  background-color: #2f4f4f;
+}
+
+/**/
+/*Building the pieces of the ship*/
+/**/
+
+/*Measured the body triangle at 120px on the base and 130px tall*/
+.shipbody {
+  width: 0;
+  height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 130px solid #b22222;
+}
+
+/*Measured the thrusters at 95px on the base and 100px tall*/
+.thruster-left, .thruster-right {
+  width: 0;
+  height: 0;
+  border-left: 47.5px solid transparent;
+  border-right: 47.5px solid transparent;
+  border-top: 100px solid #b22222;
+}
+
+/*Measured the thrustercaps at 30px on the base and 32px tall*/
+.thrustercap-left, .thrustercap-right {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 32px solid #ffa500;
+}
+
+/**/
+/*Building the star pieces*/
+/*Note: It's built by overlaying three triangles*/
+/**/
+.star {
+  margin: 50px 0;
+  position: relative;
+  display: block;
+  color: white;
+  width: 0px;
+  height: 0px;
+  border-right:  100px solid transparent;
+  border-bottom: 70px  solid white;
+  border-left:   100px solid transparent;
+  transform: scale(0.2);
+}
+
+.star:before {
+  border-bottom: 80px solid white;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: -45px;
+  left: -65px;
+  display: block;
+  content: '';
+  transform: rotate(-35deg);
+}
+
+.star:after {
+  position: absolute;
+  display: block;
+  color: white;
+  top: 3px;
+  left: -105px;
+  width: 0px;
+  height: 0px;
+  border-right: 100px solid transparent;
+  border-bottom: 70px solid white;
+  border-left: 100px solid transparent;
+  transform: rotate(-70deg);
+  content:"";
+}
+
+
+/**/
+/*Positioning of the Individual Ship Pieces*/
+/* Note: Measured positions are distance of that border side from that edge of the canvas*/
+/**/
+
+.shipbody {
+  position: absolute;
+  top: 308px; 
+  left: 172px;
+}
+
+.thruster-left {
+  position: absolute;
+  top: 366px;
+  left: 137px;
+}
+
+.thruster-right {
+  position: absolute;
+  top: 366px;
+  left: 235px;
+}
+
+.thrustercap-left {
+  position: absolute;
+  top: 437px;
+  left: 169px;
+}
+
+.thrustercap-right {
+  position: absolute;
+  top: 437px;
+  left: 266px;
+}
+
+/**/
+/*The div storing the ship as a single, movable object*/
+/*Note: Adjust this and not the above ship pieces*/
+/**/
+
+.shipcontainer {
+  position: absolute;
+  top: 0px; /*-306px is verticle "0" on the screen of tip of the ship*/ 
+  left: 10px; /*-234px is horizontal "0" on the screen of tip of the ship*/
+  z-index: 10;
+}
+
+
+/**/
+/*Making a general starfield and setting their positions*/
+/*Note: Adjust these to change the positions of the stars and not the above star pieces*/
+/*Note: -62px is verticle "0", -80px is horizontal "0" on the screen of top-left star point*/
+/**/
+
+.firststar {
+  position: absolute; /* (top,left) position (162,21) */
+  top: 100px;
+  left: -59px;
+}
+
+.secondstar {
+  position: absolute;  /* (top,left) position (481,63) */
+  top: 419px;
+  left: -17px;
+}
+
+.thirdstar {
+  position: absolute;  /* (top,left) position (770,42) */
+  top: 708px;
+  left: -39px;
+}
+
+.fourthstar {
+  position: absolute;  /* (top,left) position (935,21) */
+  top: 873px;
+  left: -59px;
+}
+
+.fifthstar {
+  position: absolute;  /* (top,left) position (218,461) */
+  top: 156px;
+  left: 381px;
+}
+
+.sixthstar {
+  position: absolute;  /* (top,left) position (395,311) */
+  top: 333px;
+  left: 231px;
+}
+
+.seventhstar {
+  position: absolute;  /* (top,left) position (707,291) */
+  top: 645px;
+  left: 211px;
+}
+
+.eighthstar {
+  position: absolute;  /* (top,left) position (894,341) */
+  top: 832px;
+  left: 261px;
+}
+
+
+/**/
+/*Moving the starfields in two single, movable divs*/
+/*Note: This is the part that is animated*/
+/**/
+
+.starfield-1 {
+  position: absolute;
+  animation: moveDown 3s ease-in-out infinite normal;
+  /*Note: syntax for "animation:"
+  animation: name duration timing-function delay iteration-count direction fill-mode;*/
+}
+
+.starfield-2 {
+  position: absolute;
+  top: -765px; /*move the second starfield up so the fourthstar overlaps with starfield-1 firststar*/ 
+  animation: moveDown 3s ease-in-out infinite normal;
+}
+
+@keyframes moveDown {
+  100% {
+  transform: translateY(765px); 
+  }
+}
